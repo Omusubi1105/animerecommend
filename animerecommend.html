@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>アニメ診断チャート</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #fefefe;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .question, .result {
+      margin-top: 30px;
+    }
+    .btn {
+      display: inline-block;
+      width: 100%;
+      max-width: 300px;
+      margin: 10px auto;
+      padding: 12px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #45a049;
+    }
+    .hidden {
+      display: none;
+    }
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+      .btn {
+        font-size: 18px;
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>アニメ診断チャート</h1>
+  <p style="text-align:center;">質問に答えると、あなたにぴったりのアニメがわかります！</p>
+
+  <div id="Q1" class="question">
+    <p>Q1. アニメはテンポの速さが命？</p>
+    <button class="btn" onclick="next('Q2')">YES</button>
+    <button class="btn" onclick="next('Q3')">NO</button>
+  </div>
+
+  <div id="Q2" class="question hidden">
+    <p>Q2. 展開の派手さは大事？</p>
+    <button class="btn" onclick="next('Q4')">YES</button>
+    <button class="btn" onclick="next('Q5')">NO</button>
+  </div>
+
+  <div id="Q3" class="question hidden">
+    <p>Q3. 淡々とした日常に癒やされたい？</p>
+    <button class="btn" onclick="next('Q6')">YES</button>
+    <button class="btn" onclick="next('Q7')">NO</button>
+  </div>
+
+  <div id="Q4" class="question hidden">
+    <p>Q4. 肉体的な戦いより心理戦が好き？</p>
+    <button class="btn" onclick="next('Q8')">YES</button>
+    <button class="btn" onclick="next('Q9')">NO</button>
+  </div>
+
+  <div id="Q5" class="question hidden">
+    <p>Q5. 知識が得られるアニメっていいよね？</p>
+    <button class="btn" onclick="next('Q10')">YES</button>
+    <button class="btn" onclick="showResult('A')">NO</button>
+  </div>
+
+  <div id="Q6" class="question hidden">
+    <p>Q6. ほっこり系より、ちょっとクセのある話が好き？</p>
+    <button class="btn" onclick="next('Q10')">YES</button>
+    <button class="btn" onclick="showResult('B')">NO</button>
+  </div>
+
+  <div id="Q7" class="question hidden">
+    <p>Q7. ストーリーに社会的テーマが含まれてると嬉しい？</p>
+    <button class="btn" onclick="next('Q10')">YES</button>
+    <button class="btn" onclick="showResult('C')">NO</button>
+  </div>
+
+  <div id="Q8" class="question hidden">
+    <p>Q8. 勝ち負けより信念のぶつかり合いに惹かれる？</p>
+    <button class="btn" onclick="showResult('D')">YES</button>
+    <button class="btn" onclick="showResult('E')">NO</button>
+  </div>
+
+  <div id="Q9" class="question hidden">
+    <p>Q9. キャラの魅力より世界観重視？</p>
+    <button class="btn" onclick="showResult('F')">YES</button>
+    <button class="btn" onclick="showResult('G')">NO</button>
+  </div>
+
+  <div id="Q10" class="question hidden">
+    <p>Q10. 昭和〜平成初期の空気感、嫌いじゃない？</p>
+    <button class="btn" onclick="showResult('H')">YES</button>
+    <button class="btn" onclick="showResult('A')">NO</button>
+  </div>
+
+  <div id="result" class="result hidden">
+    <h2>診断結果：あなたにおすすめのアニメは…</h2>
+    <h1 style="text-align:center;">『美味しんぼ』</h1>
+    <p id="reason"></p>
+  </div>
+
+  <script>
+    function next(id) {
+      document.querySelectorAll('.question').forEach(q => q.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function showResult(resultId) {
+      document.querySelectorAll('.question').forEach(q => q.classList.add('hidden'));
+      document.getElementById("result").classList.remove("hidden");
+
+      const reasons = {
+        A: "1話完結でテンポ良し！肩肘張らずに観られる“ながら見アニメ”の最高峰です。",
+        B: "クセのあるキャラたちと日常の中にあるドラマがじわじわ効いてくる名作です。",
+        C: "重いテーマは気にせずOK。ご飯の美味しさを愛でるだけで楽しめます！",
+        D: "食を通して信念をぶつけ合う、静かだけど熱い知的バトルが光ります。",
+        E: "勝敗が命懸け。料理こそが真の戦い！地味にアツいバトルアニメです。",
+        F: "“日本とは何か”を考えさせられる、美味しんぼの世界観は奥が深い！",
+        G: "山岡・雄山はもちろん、脇役たちも魅力的。人間関係がごった煮で面白い！",
+        H: "ファッション、音楽、台詞回し…昭和の空気ごと味わえるアニメです。"
+      };
+
+      document.getElementById("reason").innerText = reasons[resultId];
+    }
+  </script>
+</body>
+</html>
